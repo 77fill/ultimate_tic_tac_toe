@@ -1,0 +1,1 @@
+export type RegularCellValue = ""|"X"|"O"
