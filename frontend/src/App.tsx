@@ -3,11 +3,20 @@ import './App.css';
 import TabularField from './components/TabularField';
 import Field from './components/RegularField';
 import UltimateTicTacToeData from "./data/UltimateTicTacToeData"
+import TicTacToeData from './data/TicTacToeData';
+import { RegularCellValue } from './data/RegularCellValue';
 
 function App() {
 	const [ultimateFieldData, setUltimateFieldData] = useState(new UltimateTicTacToeData())
-	const get = (x:number,y:number) => ({
-		data: ultimateFieldData.get(x,y)
+	const get = (metaX:number,metaY:number) => ({
+		data: ultimateFieldData.get(metaX,metaY),
+		set: (x:number,y:number,value:RegularCellValue) => {
+		 	setUltimateFieldData( 
+				old => old.set(
+					metaX,metaY,
+					old.get(metaX,metaY)
+						.set(x,y,value)) )
+		}
 	})
   return (
     <div className="App">

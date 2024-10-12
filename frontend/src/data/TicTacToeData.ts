@@ -5,7 +5,6 @@ export default class TicTacToeData {
 	private validator = Validator.instance
 	private raw: RegularCellValue[][] 
 	
-	constructor();
 	constructor(
 		raw?: RegularCellValue[][]
 	) {
@@ -28,4 +27,22 @@ export default class TicTacToeData {
 		return this.raw[x][y]
 	}
 	
+	public set(x: number, y: number, value: RegularCellValue): TicTacToeData {
+		const newRaw = [] as RegularCellValue[][]
+
+		for(let newRawX of [0,1,2]) {
+			newRaw.push(this.raw[newRawX])
+		}
+
+		let newRow = [] as RegularCellValue[]
+		for(let newRowY of [0,1,2]) {
+			if(newRowY === y)
+				newRow.push(value)
+			else
+				newRow.push(this.raw[x][newRowY])
+		}
+		newRaw[x] = newRow
+		
+		return new TicTacToeData(newRaw)
+	}
 }

@@ -11,4 +11,9 @@ export default class Validator {
 	public areCoordinates(...coords: number[]) {
 		coords.forEach(coord => this.isCoordinate(coord))
 	}
+
+	public isThreeByThree(array: any[][]) {
+		if(array.length != 3 || array.some(array2 => array2.length != 3))
+			throw new Error("Array must be three by three: "+array)
+	}
 }
