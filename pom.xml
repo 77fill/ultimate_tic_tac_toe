@@ -5,4 +5,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>ultimate_tic_tac_toe</name>
   <description>Ultimate Tic Tac Toe</description>
+  <packaging>pom</packaging>
+  
+  <modules>
+  	<module>backend/configuration</module>
+  	<module>backend/logic</module>
+  	<module>backend/store</module>
+  	<module>backend/websocket</module>
+  </modules>
 </project>
