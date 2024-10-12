@@ -5,13 +5,13 @@ import TabularField from "./TabularField"
 
 type Props = {
 	data: TicTacToeData
-	set: (x:number,y:number,value:RegularCellValue) => void
+	set: (x:number,y:number) => void
 }
 
 export default function RegularField(props: Props) {
 	const get = (x:number,y:number)=>({
 		value: props.data.get(x,y),
-		set: (value:RegularCellValue) => props.set(x,y,value)
+		set: () => props.set(x,y)
 	})
 	
 	return <TabularField>

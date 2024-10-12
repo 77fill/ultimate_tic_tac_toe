@@ -10,12 +10,12 @@ function App() {
 	const [ultimateFieldData, setUltimateFieldData] = useState(new UltimateTicTacToeData())
 	const get = (metaX:number,metaY:number) => ({
 		data: ultimateFieldData.get(metaX,metaY),
-		set: (x:number,y:number,value:RegularCellValue) => {
+		set: (x:number,y:number) => {
 		 	setUltimateFieldData( 
 				old => old.set(
 					metaX,metaY,
 					old.get(metaX,metaY)
-						.set(x,y,value)) )
+						.set(x,y,"X")) )
 		}
 	})
   return (
