@@ -1,5 +1,6 @@
 package dev.pschmalz.ultimate_tic_tac_toe.logic.management;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -11,7 +12,7 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.GameEvent;
 
 public class GameRoom implements Runnable {
-	private Map<Symbol, Player> players;
+	private Map<Symbol, Player> players = new HashMap<>();
 	private Symbol currentTurn = Symbol.X;
 	private Queue<GameEvent> events = new ConcurrentLinkedQueue<>();
 	private boolean running = true;

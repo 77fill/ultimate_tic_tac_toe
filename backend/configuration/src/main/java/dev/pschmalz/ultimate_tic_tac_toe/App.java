@@ -15,8 +15,10 @@ public class App {
 		ctx.refresh();
 		
 		var jetty = ctx.getBean(Server.class);
+		var executor = ctx.getBean(Executor.class);
 		
-		Lobby.instance = new Lobby(ctx.getBean(Executor.class));
+		Lobby.instance = new Lobby(executor);
+		executor.execute(Lobby.instance);
 		
 		jetty.start();
 		jetty.join();

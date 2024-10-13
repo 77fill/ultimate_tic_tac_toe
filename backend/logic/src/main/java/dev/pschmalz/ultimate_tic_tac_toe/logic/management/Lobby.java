@@ -36,7 +36,7 @@ public class Lobby implements Runnable {
 			
 			while(idlePlayers.size() > 1) {
 				var player1 = idlePlayers.remove(0);
-				var player2 = idlePlayers.remove(1);
+				var player2 = idlePlayers.remove(0);
 				
 				var gameRoom = new GameRoom(player1, player2);
 				
@@ -44,6 +44,8 @@ public class Lobby implements Runnable {
 				rooms.put(player2, gameRoom);
 				
 				executor.execute(gameRoom);
+				
+				System.out.println("Players matched!");
 			}
 			
 			try {
