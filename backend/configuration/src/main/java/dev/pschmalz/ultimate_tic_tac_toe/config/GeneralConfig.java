@@ -2,6 +2,8 @@ package dev.pschmalz.ultimate_tic_tac_toe.config;
 
 import java.net.URL;
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee10.servlet.ServletHolder;
@@ -32,5 +34,10 @@ public class GeneralConfig {
         });
 		
 		return jetty;
+	}
+	
+	@Bean
+	public Executor executor() {
+		return Executors.newFixedThreadPool(10);
 	}
 }
