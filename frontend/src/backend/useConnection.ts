@@ -13,9 +13,16 @@ export default function useConnection(setUltimateFieldData: React.Dispatch<SetSt
     }
 
     ws.onmessage = e => {
+        const msg = JSON.parse(e.data)
 
-        if(e.data.type === "gameState")
-            setUltimateFieldData(tttAdapt(e.data))
+        console.log("onmessage", msg.symbols)
+
+        if(msg.type === "gameState")
+            setUltimateFieldData(tttAdapt(msg.symbols))
+    }
+
+    ws.onclose = e => {
+        console.log("onclose!")
     }
 
     const send = async (msg: Message) => {

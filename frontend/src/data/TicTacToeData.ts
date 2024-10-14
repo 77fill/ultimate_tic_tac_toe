@@ -24,24 +24,24 @@ export default class TicTacToeData {
 	public get(x: number, y: number) {
 		this.validator.areCoordinates(x,y)
 		
-		return this.raw[x][y]
+		return this.raw[y][x]
 	}
 	
 	public set(x: number, y: number, value: RegularCellValue): TicTacToeData {
 		const newRaw = [] as RegularCellValue[][]
 
-		for(let newRawX of [0,1,2]) {
-			newRaw.push(this.raw[newRawX])
+		for(let newRawY of [0,1,2]) {
+			newRaw.push(this.raw[newRawY])
 		}
 
 		let newRow = [] as RegularCellValue[]
-		for(let newRowY of [0,1,2]) {
-			if(newRowY === y)
+		for(let newCellX of [0,1,2]) {
+			if(newCellX === x)
 				newRow.push(value)
 			else
-				newRow.push(this.raw[x][newRowY])
+				newRow.push(this.raw[y][newCellX])
 		}
-		newRaw[x] = newRow
+		newRaw[y] = newRow
 		
 		return new TicTacToeData(newRaw)
 	}

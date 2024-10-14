@@ -21,5 +21,8 @@ export default function tttAdapt(obj: any): UltimateTicTacToeData {
         }
         metaRaw.push(metaRow)
     }
-    return new UltimateTicTacToeData(metaRaw)       
+    const result = new UltimateTicTacToeData(metaRaw)       
+
+    console.log("tttAdapt",result)
+    return result
 }
