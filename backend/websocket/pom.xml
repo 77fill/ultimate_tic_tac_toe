@@ -5,6 +5,13 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>ultimate_tic_tac_toe_websocket</name>
   
+  <parent> 
+  	<groupId>dev.pschmalz</groupId>
+  	<artifactId>ultimate_tic_tac_toe_parent</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	<relativePath>../../parentPom.xml</relativePath>
+  </parent>
+  
   <dependencies>
   	<dependency>
   		<groupId>dev.pschmalz</groupId>

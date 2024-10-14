@@ -4,6 +4,18 @@
   <artifactId>ultimate_tic_tac_toe_configuration</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>ultimate_tic_tac_toe_configuration</name>
+   
+  <parent> 
+  	<groupId>dev.pschmalz</groupId>
+  	<artifactId>ultimate_tic_tac_toe_parent</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	<relativePath>../../parentPom.xml</relativePath>
+  </parent>
+  
+  <properties>
+  	<maven.compiler.source>21</maven.compiler.source>
+  	<maven.compiler.target>21</maven.compiler.target>
+  </properties>
   
   <dependencies>
   	<dependency>
