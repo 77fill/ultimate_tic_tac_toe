@@ -60,6 +60,17 @@ public class GameRoom implements Runnable {
 		}
 	}
 	
+	public void destroy() {
+		running = false;
+	}
+	
+	public Player getOtherPlayer(Player player) {
+		if(player == players.get(Symbol.X))
+			return players.get(Symbol.O);
+		else
+			return players.get(Symbol.X);
+	}
+	
 	public void addEvent(GameEvent event) {
 		events.add(event);
 	}

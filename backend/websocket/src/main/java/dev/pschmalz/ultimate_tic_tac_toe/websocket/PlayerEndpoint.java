@@ -8,6 +8,7 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.LobbyEvent;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.RegularCellCoordinatesData;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.Message;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.entities.PlayerImpl;
+import jakarta.websocket.OnClose;
 import jakarta.websocket.OnMessage;
 import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;
@@ -44,5 +45,10 @@ public class PlayerEndpoint {
 			.whereIs(player)
 			.ifPresent(room -> room.addEvent(
 					event));
+	}
+	
+	@OnClose
+	public void onClose() {
+		Lobby.instance.searchAndDestroy(player);
 	}
 }

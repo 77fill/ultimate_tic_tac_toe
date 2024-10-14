@@ -57,6 +57,21 @@ public class Lobby implements Runnable {
 		}
 	}
 	
+	public void searchAndDestroy(Player player) {
+		if(idlePlayers.contains(player))
+			idlePlayers.remove(player);
+		else if(rooms.containsKey(player)) {
+			var room = rooms.get(player);
+			
+			var otherPlayer = room.getOtherPlayer(player);
+			
+			rooms.remove(player);
+			rooms.remove(otherPlayer);
+			
+			room.destroy();
+		}
+	}
+	
 	public void addEvent(LobbyEvent event) {
 		events.add(event);
 	}
