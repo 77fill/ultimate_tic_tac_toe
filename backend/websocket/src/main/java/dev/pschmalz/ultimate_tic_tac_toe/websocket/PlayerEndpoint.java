@@ -6,6 +6,7 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.management.Lobby;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.GameEvent;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.LobbyEvent;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.RegularCellCoordinatesData;
+import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.Message;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.entities.PlayerImpl;
 import jakarta.websocket.OnMessage;
 import jakarta.websocket.OnOpen;
@@ -27,9 +28,15 @@ public class PlayerEndpoint {
 	}
 	
 	@OnMessage
-	public void onMessage(String msg) {
-		var coords = gson.fromJson(msg, RegularCellCoordinatesData.class);
+	public void onMessage(String msgJson) {
+		var msg = gson.fromJson(msgJson, Message.class);
 		var event = new GameEvent();
+		var coords = new RegularCellCoordinatesData();
+		coords.setMetaX(msg.getMetaX());
+		coords.setMetaY(msg.getMetaY());
+		coords.setX(msg.getX());
+		coords.setY(msg.getY());
+		
 		event.setCoords(coords);
 		event.setSource(player);
 		

@@ -43,6 +43,11 @@ public class GameRoom implements Runnable {
 				
 				if(players.get(currentTurn) == event.getSource()) {
 					metaGame.putSymbol(currentTurn, coords);
+					
+					var otherPlayer = players.get(Symbol.other(currentTurn));
+					
+					otherPlayer.gameState(metaGame);
+					otherPlayer.itsYourTurn();
 				}
 			}
 			
