@@ -15,7 +15,7 @@ public class MetaGame {
 	}
 	
 	public void putSymbol(Symbol symbol, RegularCellCoordinates coords) {
-		System.out.println("Symbol: "+symbol+"\nCoords: "+coords.toString());
+		raw[coords.getX() + coords.getY()*3 + coords.getMetaX()*9 + coords.getMetaY()*27] = symbol;
 	}
 	
 	public List<String> getListOfStrings() {

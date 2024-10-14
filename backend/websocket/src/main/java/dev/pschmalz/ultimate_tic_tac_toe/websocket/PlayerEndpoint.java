@@ -49,6 +49,7 @@ public class PlayerEndpoint {
 	
 	@OnClose
 	public void onClose() {
+		System.out.println("onClose!");
 		Lobby.instance.searchAndDestroy(player);
 	}
 }
