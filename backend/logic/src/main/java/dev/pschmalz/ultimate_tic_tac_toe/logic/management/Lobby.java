@@ -13,7 +13,6 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.LobbyEvent;
 
 public class Lobby implements Runnable {
-	public static Lobby instance;
 	private Queue<LobbyEvent> events = new ConcurrentLinkedQueue<>();
 	private boolean running = true;
 	private Map<Player, GameRoom> rooms = new HashMap<>();

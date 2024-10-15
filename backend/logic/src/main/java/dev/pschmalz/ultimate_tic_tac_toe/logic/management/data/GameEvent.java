@@ -1,8 +1,6 @@
 package dev.pschmalz.ultimate_tic_tac_toe.logic.management.data;
 
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
-import dev.pschmalz.ultimate_tic_tac_toe.logic.RegularCellCoordinates;
-import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 
 public class GameEvent {
 	private RegularCellCoordinatesData coords;
