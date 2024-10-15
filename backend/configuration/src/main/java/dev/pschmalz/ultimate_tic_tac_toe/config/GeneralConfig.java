@@ -8,8 +8,10 @@ import org.eclipse.jetty.ee10.websocket.jakarta.server.config.JakartaWebSocketSe
 import org.eclipse.jetty.server.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.server.standard.ServerEndpointRegistration;
 
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.PlayerEndpoint;
+import jakarta.websocket.Endpoint;
 import jakarta.websocket.server.ServerEndpointConfig;
 
 @Configuration
@@ -18,9 +20,13 @@ public class GeneralConfig {
 	public Server jetty() {
 		var jetty = new Server(8080);
 		
+		
+		
 		ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContextHandler.setContextPath("/");
         jetty.setHandler(servletContextHandler);
+        
+        
 
         // Add javax.websocket support
         JakartaWebSocketServletContainerInitializer.configure(servletContextHandler, (context, container) ->
@@ -30,9 +36,16 @@ public class GeneralConfig {
             container.addEndpoint(echoConfig);
             
             container.setDefaultMaxSessionIdleTimeout(Long.MAX_VALUE);
+            
+            
         });
 		
 		return jetty;
+	}
+	
+	@Bean
+	public PlayerEndpoint playerEndpoint() {
+		return new PlayerEndpoint();
 	}
 	
 	@Bean
