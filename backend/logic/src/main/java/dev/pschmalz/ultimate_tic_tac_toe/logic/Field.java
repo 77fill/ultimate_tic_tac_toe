@@ -8,17 +8,18 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.data.RuleViolation;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 
 public class Field {
-	Symbol[][] cells;
+	Optional<Symbol>[][] cells;
 	private Validator validator = Validator.instance;
 	private VictoryJudge victoryJudge = new VictoryJudge(this);
 	
+	@SuppressWarnings("unchecked")
 	public Field() {
 		
-		cells = new Symbol[3][];
+		cells = new Optional[3][];
 		for(int x = 0; x < 3; x++) {
-			cells[x] = new Symbol[3];
+			cells[x] = new Optional[3];
 			for(int y = 0; y < 3; y++)
-				cells[x][y] = null;
+				cells[x][y] = Optional.empty();
 		}
 	}
 	
@@ -26,10 +27,10 @@ public class Field {
 		if(!validator.areCoordinatesValid(x, y))
 			return RuleViolation.INVALID_COORDINATES;
 		
-		if(cells[x][y] != null)
+		if(cells[x][y].isPresent())
 			return RuleViolation.OCCUPIED_CELL;
 		
-		cells[x][y] = symbol;
+		cells[x][y] = Optional.of(symbol);
 		return RuleViolation.NONE;
 	}
 	
@@ -37,11 +38,10 @@ public class Field {
 		var list = new ArrayList<String>();
 		for(int y = 0; y < 3; y++)
 			for(int x = 0; x < 3; x++) {
-				var cell = "";
-				if(cells[x][y] != null)
-					cell = cells[x][y].toString();
-				
-				list.add(cell);
+				if(cells[x][y].isPresent())
+					list.add(cells[x][y].get().toString());
+				else
+					list.add("");
 			}
 		return list;
 	}
