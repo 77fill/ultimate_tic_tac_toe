@@ -27,6 +27,8 @@ function App() {
 					metaX,metaY,
 					old.get(metaX,metaY)
 						.set(x,y,symbol)) )
+
+			setItsYourTurn(false)
 		}
 	})
 
