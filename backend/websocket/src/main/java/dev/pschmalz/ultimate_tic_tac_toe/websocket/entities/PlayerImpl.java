@@ -25,8 +25,18 @@ public class PlayerImpl implements Player {
 	}
 	
 	@Override
-	public void itsYourTurn() {
-		sendMessage(new YourTurnMessage());
+	public void itsYourTurnAnyField() {
+		var msg = new YourTurnMessage();
+		sendMessage(msg);
+	}
+	
+	@Override 
+	public void itsYourTurn(int metaX, int metaY) {
+		var msg = new YourTurnMessage();
+		msg.addCurrentFieldCoord(metaX);
+		msg.addCurrentFieldCoord(metaY);
+		
+		sendMessage(msg);
 	}
 
 	@Override

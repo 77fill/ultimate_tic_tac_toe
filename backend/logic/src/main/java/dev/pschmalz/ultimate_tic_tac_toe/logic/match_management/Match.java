@@ -29,7 +29,7 @@ public class Match implements Runnable {
 
 	@Override
 	public void run() {
-		players.get(Symbol.X).itsYourTurn();
+		players.get(Symbol.X).itsYourTurnAnyField();
 		
 		while(running) {
 			while(!events.isEmpty()) 
@@ -66,7 +66,14 @@ public class Match implements Runnable {
 			var otherPlayer = players.get(Symbol.other(currentTurn));
 			
 			otherPlayer.gameState(metaGame);
-			otherPlayer.itsYourTurn();
+			var currentFieldCoords = metaGame.getCurrentFieldCoords();
+			
+			if(currentFieldCoords.isEmpty())
+				otherPlayer.itsYourTurnAnyField();
+			else
+				otherPlayer.itsYourTurn(
+						currentFieldCoords.get().getX(), 
+						currentFieldCoords.get().getY());
 			
 			currentTurn = Symbol.other(currentTurn);
 		}

@@ -66,4 +66,16 @@ public class MetaField {
 	public Optional<Field> getCurrentField() {
 		return currentField;
 	}
+	
+	public Optional<CellCoordinates> getCurrentFieldCoords() {
+		if(currentField.isEmpty())
+			return Optional.empty();
+		
+		for(int x = 0; x < 3; x++)
+			for(int y = 0; y < 3; y++)
+				if(fields[x][y] == currentField.get())
+					return Optional.of(new CellCoordinates(x, y));
+		
+		return Optional.empty();
+	}
 }
