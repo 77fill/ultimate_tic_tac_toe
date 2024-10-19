@@ -10,18 +10,23 @@ import Message from './backend/Message';
 
 function App() {
 	const [ultimateFieldData, setUltimateFieldData] = useState(new UltimateTicTacToeData())
-	const send = useConnection(setUltimateFieldData)
+	const [itsYourTurn, setItsYourTurn] = useState(false)
+	const [symbol, setSymbol] = useState("X" as RegularCellValue)
+	const send = useConnection(setUltimateFieldData, setItsYourTurn, setSymbol)
 
 	const get = (metaX:number,metaY:number) => ({
 		data: ultimateFieldData.get(metaX,metaY),
 		set: (x:number,y:number) => {
+			if(!itsYourTurn)
+				return;
+
 			send(new Message("coords",metaX, metaY,x,y))
 
 		 	setUltimateFieldData( 
 				old => old.set(
 					metaX,metaY,
 					old.get(metaX,metaY)
-						.set(x,y,"X")) )
+						.set(x,y,symbol)) )
 		}
 	})
 
