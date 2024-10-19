@@ -19,6 +19,8 @@ function App() {
 		set: (x:number,y:number) => {
 			if(!itsYourTurn)
 				return;
+			if(ultimateFieldData.get(metaX,metaY).get(x,y) !== "")
+				return;
 
 			send(new Message("coords",metaX, metaY,x,y))
 
