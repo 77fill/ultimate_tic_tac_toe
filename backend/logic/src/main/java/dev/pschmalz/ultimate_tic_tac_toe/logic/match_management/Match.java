@@ -48,6 +48,8 @@ public class Match implements Runnable {
 					
 					otherPlayer.gameState(metaGame);
 					otherPlayer.itsYourTurn();
+					
+					currentTurn = Symbol.other(currentTurn);
 				}
 			}
 			
