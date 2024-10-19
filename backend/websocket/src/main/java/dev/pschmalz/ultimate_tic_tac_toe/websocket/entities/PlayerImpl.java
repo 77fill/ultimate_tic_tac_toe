@@ -36,7 +36,7 @@ public class PlayerImpl implements Player {
 	public void gameState(MetaField metaGame) {
 		var gameStateMessage = new GameStateMessage();
 		
-		gameStateMessage.setSymbols(metaGame.getListOfStrings());
+		gameStateMessage.setSymbols(metaGame.toListOfStrings());
 		
 		try {
 			session.sendMessage(new TextMessage(gson.toJson(gameStateMessage)));

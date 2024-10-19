@@ -29,7 +29,7 @@ public class TestField {
 				List.of("X","","O",
 						"X","","O",
 						"","",""), 
-				example_field1.getListOfStrings());
+				example_field1.toListOfStrings());
 	}
 	
 	@Test

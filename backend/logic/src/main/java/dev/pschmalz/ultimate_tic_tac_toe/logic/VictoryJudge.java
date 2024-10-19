@@ -11,7 +11,25 @@ public class VictoryJudge {
 		this.field = field;
 	}
 	
-	public Optional<Symbol> getSymbolWithVictoryRow() {
+	public Optional<Symbol> getVictoriousSymbol() {
+		Optional<Symbol> victoriousSymbol;
+		
+		victoriousSymbol = getSymbolWithVictoryRow();
+		if(victoriousSymbol.isPresent())
+			return victoriousSymbol;
+		
+		victoriousSymbol = getSymbolWithVictoryColumn();
+		if(victoriousSymbol.isPresent())
+			return victoriousSymbol;
+		
+		victoriousSymbol = getSymbolWithVictoryDiagonal();
+		if(victoriousSymbol.isPresent())
+			return victoriousSymbol;
+		
+		return Optional.empty();
+	}
+	
+	private Optional<Symbol> getSymbolWithVictoryRow() {
 		for(int y = 0; y < 3; y++)
 			if(field.cells[0][y].isPresent()
 					&& field.cells[1][y].isPresent()
@@ -22,7 +40,7 @@ public class VictoryJudge {
 		
 		return Optional.empty();
 	}
-	public Optional<Symbol> getSymbolWithVictoryColumn() {
+	private Optional<Symbol> getSymbolWithVictoryColumn() {
 		for(int x = 0; x < 3; x++)
 			if(field.cells[x][0].isPresent()
 					&& field.cells[x][1].isPresent()
@@ -33,7 +51,7 @@ public class VictoryJudge {
 		
 		return Optional.empty();
 	}
-	public Optional<Symbol> getSymbolWithVictoryDiagonal() {
+	private Optional<Symbol> getSymbolWithVictoryDiagonal() {
 		var center = field.cells[1][1];
 		
 		if(center.isEmpty())

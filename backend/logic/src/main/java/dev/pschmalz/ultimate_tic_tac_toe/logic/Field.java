@@ -11,6 +11,7 @@ public class Field {
 	Optional<Symbol>[][] cells;
 	private Validator validator = Validator.instance;
 	private VictoryJudge victoryJudge = new VictoryJudge(this);
+	private boolean victoryDecided = false;
 	
 	@SuppressWarnings("unchecked")
 	public Field() {
@@ -34,7 +35,7 @@ public class Field {
 		return RuleViolation.NONE;
 	}
 	
-	public List<String> getListOfStrings() {
+	public List<String> toListOfStrings() {
 		var list = new ArrayList<String>();
 		for(int y = 0; y < 3; y++)
 			for(int x = 0; x < 3; x++) {
@@ -47,22 +48,17 @@ public class Field {
 	}
 	
 	public Optional<Symbol> getVictoriousSymbol() {
-		Optional<Symbol> victoriousSymbol;
-		var judge = victoryJudge;
+		return victoryJudge.getVictoriousSymbol();
+	}
+	
+	public boolean isVictoryDecided() {
+		if(victoryDecided)
+			return true;
 		
-		victoriousSymbol = judge.getSymbolWithVictoryRow();
-		if(victoriousSymbol.isPresent())
-			return victoriousSymbol;
+		if(victoryJudge.getVictoriousSymbol().isPresent())
+			victoryDecided = true;
 		
-		victoriousSymbol = judge.getSymbolWithVictoryColumn();
-		if(victoriousSymbol.isPresent())
-			return victoriousSymbol;
-		
-		victoriousSymbol = judge.getSymbolWithVictoryDiagonal();
-		if(victoriousSymbol.isPresent())
-			return victoriousSymbol;
-		
-		return Optional.empty();
+		return victoryDecided;
 	}
 	
 }
