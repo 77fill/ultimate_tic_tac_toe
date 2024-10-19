@@ -22,16 +22,18 @@ export default function useConnection(
 
         console.log("onmessage", msg.type)
 
-        if(msg.type === "gameState") {
-            setUltimateFieldData(tttAdapt(msg.symbols))
-            setItsYourTurn(false)
+        switch(msg.type) {
+            case "gameState":
+                setUltimateFieldData(tttAdapt(msg.symbols))
+                setItsYourTurn(false)
+                break;
+            case "itsYourTurn":
+                setItsYourTurn(true)
+                break;
+            case "setSymbol":
+                setSymbol(msg.symbol)
+                break;
         }
-
-        if(msg.type === "itsYourTurn")
-            setItsYourTurn(true)
-
-        if(msg.type === "setSymbol")
-            setSymbol(msg.symbol)
     }
 
     ws.onclose = e => {
