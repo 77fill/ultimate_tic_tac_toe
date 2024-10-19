@@ -20,7 +20,7 @@ export default function useConnection(
     ws.onmessage = e => {
         const msg = JSON.parse(e.data)
 
-        console.log("onmessage", msg.symbols)
+        console.log("onmessage", msg.type)
 
         if(msg.type === "gameState") {
             setUltimateFieldData(tttAdapt(msg.symbols))
@@ -31,7 +31,7 @@ export default function useConnection(
             setItsYourTurn(true)
 
         if(msg.type === "setSymbol")
-            setSymbol(msg.value)
+            setSymbol(msg.symbol)
     }
 
     ws.onclose = e => {
