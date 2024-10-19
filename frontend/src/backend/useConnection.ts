@@ -33,6 +33,10 @@ export default function useConnection(
             case "setSymbol":
                 setSymbol(msg.symbol)
                 break;
+            case "violation":
+                setItsYourTurn(true)
+                setUltimateFieldData(tttAdapt(msg.symbols))
+                break;
         }
     }
 
