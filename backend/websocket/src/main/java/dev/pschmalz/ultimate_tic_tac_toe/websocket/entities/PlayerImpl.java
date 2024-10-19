@@ -9,7 +9,9 @@ import com.google.gson.Gson;
 
 import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaField;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.GameStateMessage;
+import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.SetSymbolMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.YourTurnMessage;
 
 public class PlayerImpl implements Player {
@@ -38,6 +40,18 @@ public class PlayerImpl implements Player {
 		
 		try {
 			session.sendMessage(new TextMessage(gson.toJson(gameStateMessage)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void setSymbol(Symbol symbol) {
+		var msg = new SetSymbolMessage();
+		msg.setSymbol(symbol.toString());
+		try {
+			session.sendMessage(new TextMessage(gson.toJson(msg)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

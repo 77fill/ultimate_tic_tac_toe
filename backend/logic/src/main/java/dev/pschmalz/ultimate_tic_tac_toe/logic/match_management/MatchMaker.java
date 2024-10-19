@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.match_management.events.MatchMakerEvent;
 
 public class MatchMaker implements Runnable {
@@ -50,6 +51,9 @@ public class MatchMaker implements Runnable {
 				
 				rooms.put(player1, match);
 				rooms.put(player2, match);
+				
+				player1.setSymbol(Symbol.X);
+				player2.setSymbol(Symbol.O);
 				
 				executor.execute(match);
 				
