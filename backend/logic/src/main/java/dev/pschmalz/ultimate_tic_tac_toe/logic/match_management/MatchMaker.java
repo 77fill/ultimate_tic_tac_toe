@@ -17,7 +17,7 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.match_management.events.MatchMake
 public class MatchMaker implements Runnable {
 	private Queue<MatchMakerEvent> events = new ConcurrentLinkedQueue<>();
 	private boolean running = true;
-	private Map<Player, Match> rooms = new Hashtable<>();
+	private Map<Player, Match> matches = new Hashtable<>();
 	private List<Player> idlePlayers = new ArrayList<>();
 	private Executor executor;
 	
@@ -49,8 +49,8 @@ public class MatchMaker implements Runnable {
 				
 				var match = new Match(player1, player2);
 				
-				rooms.put(player1, match);
-				rooms.put(player2, match);
+				matches.put(player1, match);
+				matches.put(player2, match);
 				
 				player1.setSymbol(Symbol.X);
 				player2.setSymbol(Symbol.O);
@@ -72,13 +72,13 @@ public class MatchMaker implements Runnable {
 	private void searchAndDestroy(Player player) {
 		if(idlePlayers.contains(player))
 			idlePlayers.remove(player);
-		else if(rooms.containsKey(player)) {
-			var room = rooms.get(player);
+		else if(matches.containsKey(player)) {
+			var room = matches.get(player);
 			
 			var otherPlayer = room.getOtherPlayer(player);
 			
-			rooms.remove(player);
-			rooms.remove(otherPlayer);
+			matches.remove(player);
+			matches.remove(otherPlayer);
 			
 			room.destroy();
 		}
@@ -96,9 +96,9 @@ public class MatchMaker implements Runnable {
 		this.running = running;
 	}
 	
-	public Optional<Match> roomOf(Player player) {
-		if(rooms.containsKey(player))
-			return Optional.of(rooms.get(player));
+	public Optional<Match> matchOf(Player player) {
+		if(matches.containsKey(player))
+			return Optional.of(matches.get(player));
 		
 		return Optional.empty();
 	}

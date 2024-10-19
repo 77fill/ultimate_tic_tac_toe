@@ -58,9 +58,9 @@ public class PlayerWebSocketHandler extends TextWebSocketHandler {
 		event.setSource(players.get(session));
 		
 		matchMaker
-			.roomOf(players.get(session))
-			.ifPresent(room -> 
-				room.addEvent(event));
+			.matchOf(players.get(session))
+			.ifPresent(match -> 
+				match.addEvent(event));
 	}
 	
 	@Override
