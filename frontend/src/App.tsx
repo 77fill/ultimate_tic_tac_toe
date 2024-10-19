@@ -11,10 +11,17 @@ import Message from './backend/Message';
 function App() {
 	const [ultimateFieldData, setUltimateFieldData] = useState(new UltimateTicTacToeData())
 	const [itsYourTurn, setItsYourTurn] = useState(false)
+	const [currentFieldCoords, setCurrentFieldCoords] = useState([] as [number,number]|[])
 	const [symbol, setSymbol] = useState("X" as RegularCellValue)
-	const send = useConnection(setUltimateFieldData, setItsYourTurn, setSymbol)
+
+	const send = useConnection(
+		setUltimateFieldData, 
+		setItsYourTurn, 
+		setSymbol,
+		setCurrentFieldCoords)
 
 	const get = (metaX:number,metaY:number) => ({
+		focused: currentFieldCoords[0] === metaX && currentFieldCoords[1] === metaY,
 		data: ultimateFieldData.get(metaX,metaY),
 		set: (x:number,y:number) => {
 			if(!itsYourTurn)
@@ -37,7 +44,7 @@ function App() {
   return (
     <div className="App">
       <main>
-	  	<TabularField>
+	  	<TabularField focused={currentFieldCoords.length === 0}>
 			<Field {...get(0,0)}/><Field {...get(1,0)}/><Field {...get(2,0)}/>
 			<Field {...get(0,1)}/><Field {...get(1,1)}/><Field {...get(2,1)}/>
 			<Field {...get(0,2)}/><Field {...get(1,2)}/><Field {...get(2,2)}/>

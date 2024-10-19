@@ -1,8 +1,8 @@
-import { styled, Table, TableCell, TableRow } from "@mui/material"
+import { styled, SxProps, Table, TableCell, TableRow } from "@mui/material"
 import React from "react"
 
 type Props = {
-	
+	focused: boolean
 } & React.PropsWithChildren
 
 const StyledTableCell = styled(TableCell)(()=>({
@@ -19,8 +19,15 @@ const StyledTableCell = styled(TableCell)(()=>({
 
 export default function TabularField(props: Props) {
 	const children = React.Children.toArray(props.children)
+	let sx = {} as SxProps
+	if(props.focused)
+		sx = {
+			borderStyle: "solid",
+			borderWidth: "4px",
+			borderColor: "red",
+		}
 	
-	return <Table sx={{width: "initial", margin: "0 auto"}}>
+	return <Table sx={{...sx, width: "initial", margin: "0 auto"}}>
 		<TableRow>
 			<StyledTableCell>{children[0]}</StyledTableCell>
 			<StyledTableCell>{children[1]}</StyledTableCell>

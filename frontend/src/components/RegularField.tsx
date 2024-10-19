@@ -6,6 +6,7 @@ import TabularField from "./TabularField"
 type Props = {
 	data: TicTacToeData
 	set: (x:number,y:number) => void
+	focused: boolean
 }
 
 export default function RegularField(props: Props) {
@@ -14,7 +15,7 @@ export default function RegularField(props: Props) {
 		set: () => props.set(x,y)
 	})
 	
-	return <TabularField>
+	return <TabularField focused={props.focused}>
 		<Cell {...get(0,0)}/><Cell {...get(1,0)}/><Cell {...get(2,0)}/>
 		<Cell {...get(0,1)}/><Cell {...get(1,1)}/><Cell {...get(2,1)}/>
 		<Cell {...get(0,2)}/><Cell {...get(1,2)}/><Cell {...get(2,2)}/>

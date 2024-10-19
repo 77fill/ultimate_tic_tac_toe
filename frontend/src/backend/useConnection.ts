@@ -9,7 +9,8 @@ import { RegularCellValue } from "../data/RegularCellValue";
 export default function useConnection(
     setUltimateFieldData: React.Dispatch<SetStateAction<UltimateTicTacToeData>>,
     setItsYourTurn: React.Dispatch<SetStateAction<boolean>>,
-    setSymbol: React.Dispatch<SetStateAction<RegularCellValue>>) {
+    setSymbol: React.Dispatch<SetStateAction<RegularCellValue>>,
+    setCurrentFieldCoords: React.Dispatch<SetStateAction<[number,number]|[]>>) {
 
     const [ws, setWs] = useState(Connector.getWs)
 
@@ -28,6 +29,7 @@ export default function useConnection(
                 setItsYourTurn(false)
                 break;
             case "itsYourTurn":
+                setCurrentFieldCoords(msg.currentFieldCoords)
                 setItsYourTurn(true)
                 break;
             case "setSymbol":
