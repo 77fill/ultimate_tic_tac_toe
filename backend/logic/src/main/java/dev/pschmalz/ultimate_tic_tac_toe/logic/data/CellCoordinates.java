@@ -1,4 +1,4 @@
-package dev.pschmalz.ultimate_tic_tac_toe.logic;
+package dev.pschmalz.ultimate_tic_tac_toe.logic.data;
 
 public class CellCoordinates {
 	private int metaX, metaY, x, y;

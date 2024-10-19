@@ -9,4 +9,14 @@
   	<version>0.0.1-SNAPSHOT</version>
   	<relativePath>../../parentPom.xml</relativePath>
   </parent>
+  
+  <dependencies>
+  	<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+	<dependency>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter</artifactId>
+	    <scope>test</scope>
+	</dependency>
+
+  </dependencies>
 </project>

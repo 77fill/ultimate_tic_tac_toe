@@ -1,24 +1,37 @@
 package dev.pschmalz.ultimate_tic_tac_toe.logic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dev.pschmalz.ultimate_tic_tac_toe.logic.data.CellCoordinates;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 
 public class MetaField {
-	private Symbol[] raw = new Symbol[81];
+	private Field[][] fields;
+	private Validator validator = Validator.instance;
 	
 	public MetaField() {
-		for(int i = 0; i < 81; i++) {
-			raw[i] = null;
+		
+		fields = new Field[3][];
+		for(int metaX = 0; metaX < 3; metaX++) {
+			fields[metaX] = new Field[3];
+			for(int metaY = 0; metaX < 3; metaY++)
+				fields[metaX][metaY] = new Field();
 		}
 	}
 	
 	public void putSymbol(Symbol symbol, CellCoordinates coords) {
-		raw[coords.getX() + coords.getY()*3 + coords.getMetaX()*9 + coords.getMetaY()*27] = symbol;
+		var field = fields[coords.getMetaX()][coords.getMetaY()];
+		field.putSymbol(symbol, coords.getX(), coords.getY());
 	}
 	
 	public List<String> getListOfStrings() {
-		return Arrays.asList(raw).stream().map(s -> s==null?"":s.toString()).toList();
+		var list = new ArrayList<String>();
+		for(int metaY = 0; metaY < 3; metaY++)
+			for(int metaX = 0; metaX < 3; metaX++)
+				list.addAll(fields[metaX][metaY].getListOfStrings());
+		
+		return list;
 	}
 }

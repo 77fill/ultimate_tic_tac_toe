@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaField;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
-import dev.pschmalz.ultimate_tic_tac_toe.logic.CellCoordinates;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.data.CellCoordinates;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.match_management.events.GameEvent;
 
