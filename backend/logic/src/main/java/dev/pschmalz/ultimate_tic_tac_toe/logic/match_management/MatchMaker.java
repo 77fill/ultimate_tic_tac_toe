@@ -1,7 +1,8 @@
-package dev.pschmalz.ultimate_tic_tac_toe.logic.management;
+package dev.pschmalz.ultimate_tic_tac_toe.logic.match_management;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,16 +11,16 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
-import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.LobbyEvent;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.match_management.events.MatchMakerEvent;
 
-public class Lobby implements Runnable {
-	private Queue<LobbyEvent> events = new ConcurrentLinkedQueue<>();
+public class MatchMaker implements Runnable {
+	private Queue<MatchMakerEvent> events = new ConcurrentLinkedQueue<>();
 	private boolean running = true;
-	private Map<Player, GameRoom> rooms = new HashMap<>();
+	private Map<Player, Match> rooms = new Hashtable<>();
 	private List<Player> idlePlayers = new ArrayList<>();
 	private Executor executor;
 	
-	public Lobby(Executor executor) {
+	public MatchMaker(Executor executor) {
 		this.executor = executor;
 	}
 	
@@ -30,19 +31,27 @@ public class Lobby implements Runnable {
 			while(!events.isEmpty()) {
 				var event = events.poll();
 				
-				idlePlayers.add(event.getPlayer());
+				switch(event.getType()) {
+				case ENTER:
+					idlePlayers.add(event.getPlayer());
+					break;
+				case LEAVE:
+					searchAndDestroy(event.getPlayer());
+					break;
+				}
+				
 			}
 			
 			while(idlePlayers.size() > 1) {
 				var player1 = idlePlayers.remove(0);
 				var player2 = idlePlayers.remove(0);
 				
-				var gameRoom = new GameRoom(player1, player2);
+				var match = new Match(player1, player2);
 				
-				rooms.put(player1, gameRoom);
-				rooms.put(player2, gameRoom);
+				rooms.put(player1, match);
+				rooms.put(player2, match);
 				
-				executor.execute(gameRoom);
+				executor.execute(match);
 				
 				System.out.println("Players matched!");
 			}
@@ -56,7 +65,7 @@ public class Lobby implements Runnable {
 		}
 	}
 	
-	public void searchAndDestroy(Player player) {
+	private void searchAndDestroy(Player player) {
 		if(idlePlayers.contains(player))
 			idlePlayers.remove(player);
 		else if(rooms.containsKey(player)) {
@@ -71,7 +80,7 @@ public class Lobby implements Runnable {
 		}
 	}
 	
-	public void addEvent(LobbyEvent event) {
+	public void addEvent(MatchMakerEvent event) {
 		events.add(event);
 	}
 
@@ -83,7 +92,7 @@ public class Lobby implements Runnable {
 		this.running = running;
 	}
 	
-	public Optional<GameRoom> whereIs(Player player) {
+	public Optional<Match> roomOf(Player player) {
 		if(rooms.containsKey(player))
 			return Optional.of(rooms.get(player));
 		

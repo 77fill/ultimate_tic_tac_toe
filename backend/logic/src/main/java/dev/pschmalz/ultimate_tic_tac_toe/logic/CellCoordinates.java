@@ -1,9 +1,9 @@
 package dev.pschmalz.ultimate_tic_tac_toe.logic;
 
-public class RegularCellCoordinates {
+public class CellCoordinates {
 	private int metaX, metaY, x, y;
 
-	public RegularCellCoordinates(int metaX, int metaY, int x, int y) {
+	public CellCoordinates(int metaX, int metaY, int x, int y) {
 		super();
 		this.metaX = metaX;
 		this.metaY = metaY;

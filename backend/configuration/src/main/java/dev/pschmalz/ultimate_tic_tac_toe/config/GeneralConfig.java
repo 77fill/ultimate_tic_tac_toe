@@ -6,14 +6,14 @@ import java.util.concurrent.Executors;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import dev.pschmalz.ultimate_tic_tac_toe.logic.management.Lobby;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.match_management.MatchMaker;
 
 @Configuration
 public class GeneralConfig {
 	
 	@Bean
-	public Lobby lobby() {
-		var lobby = new Lobby(executor());
+	public MatchMaker lobby() {
+		var lobby = new MatchMaker(executor());
 		
 		executor().execute(lobby);
 		

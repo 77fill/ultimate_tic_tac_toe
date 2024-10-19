@@ -7,7 +7,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import com.google.gson.Gson;
 
-import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaGame;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaField;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.GameStateMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.YourTurnMessage;
@@ -31,7 +31,7 @@ public class PlayerImpl implements Player {
 	}
 
 	@Override
-	public void gameState(MetaGame metaGame) {
+	public void gameState(MetaField metaGame) {
 		var gameStateMessage = new GameStateMessage();
 		
 		gameStateMessage.setSymbols(metaGame.getListOfStrings());

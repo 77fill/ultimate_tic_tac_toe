@@ -1,24 +1,24 @@
-package dev.pschmalz.ultimate_tic_tac_toe.logic.management;
+package dev.pschmalz.ultimate_tic_tac_toe.logic.match_management;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaGame;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaField;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
-import dev.pschmalz.ultimate_tic_tac_toe.logic.RegularCellCoordinates;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.CellCoordinates;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
-import dev.pschmalz.ultimate_tic_tac_toe.logic.management.data.GameEvent;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.match_management.events.GameEvent;
 
-public class GameRoom implements Runnable {
+public class Match implements Runnable {
 	private Map<Symbol, Player> players = new HashMap<>();
 	private Symbol currentTurn = Symbol.X;
 	private Queue<GameEvent> events = new ConcurrentLinkedQueue<>();
 	private boolean running = true;
-	private MetaGame metaGame = new MetaGame();
+	private MetaField metaGame = new MetaField();
 	
-	public GameRoom(Player player1, Player player2) {
+	public Match(Player player1, Player player2) {
 		super();
 		
 		players.put(Symbol.X, player1);
@@ -34,11 +34,11 @@ public class GameRoom implements Runnable {
 			while(!events.isEmpty()) {
 				var event = events.poll();
 				var coordsData = event.getCoords();
-				var coords = new RegularCellCoordinates(
-						coordsData.getMetaX(),
-						coordsData.getMetaY(),
-						coordsData.getX(),
-						coordsData.getY());
+				var coords = new CellCoordinates(
+						coordsData.metaX(),
+						coordsData.metaY(),
+						coordsData.x(),
+						coordsData.y());
 				
 				
 				if(players.get(currentTurn) == event.getSource()) {
