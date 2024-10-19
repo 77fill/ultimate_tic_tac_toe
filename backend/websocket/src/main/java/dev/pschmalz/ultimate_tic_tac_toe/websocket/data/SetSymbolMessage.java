@@ -1,6 +1,6 @@
 package dev.pschmalz.ultimate_tic_tac_toe.websocket.data;
 
-public class SetSymbolMessage {
+public class SetSymbolMessage implements NetworkMessage {
 	private String type = "setSymbol";
 	private String symbol;
 	

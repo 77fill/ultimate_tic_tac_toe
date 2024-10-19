@@ -6,4 +6,5 @@ public interface Player {
 	public void itsYourTurn();
 	public void gameState(MetaField metaGame);
 	public void setSymbol(Symbol symbol);
+	public void violation();
 }

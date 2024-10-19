@@ -11,7 +11,9 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaField;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.GameStateMessage;
+import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.NetworkMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.SetSymbolMessage;
+import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.ViolationMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.YourTurnMessage;
 
 public class PlayerImpl implements Player {
@@ -24,12 +26,7 @@ public class PlayerImpl implements Player {
 	
 	@Override
 	public void itsYourTurn() {
-		try {
-			session.sendMessage(new TextMessage(gson.toJson(new YourTurnMessage())));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sendMessage(new YourTurnMessage());
 	}
 
 	@Override
@@ -38,18 +35,25 @@ public class PlayerImpl implements Player {
 		
 		gameStateMessage.setSymbols(metaGame.toListOfStrings());
 		
-		try {
-			session.sendMessage(new TextMessage(gson.toJson(gameStateMessage)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sendMessage(gameStateMessage);
 	}
 
 	@Override
 	public void setSymbol(Symbol symbol) {
 		var msg = new SetSymbolMessage();
 		msg.setSymbol(symbol.toString());
+		
+		sendMessage(msg);
+	}
+
+	@Override
+	public void violation() {
+		var msg = new ViolationMessage();
+		
+		sendMessage(msg);
+	}
+
+	private void sendMessage(NetworkMessage msg) {
 		try {
 			session.sendMessage(new TextMessage(gson.toJson(msg)));
 		} catch (IOException e) {
@@ -57,5 +61,4 @@ public class PlayerImpl implements Player {
 			e.printStackTrace();
 		}
 	}
-
 }

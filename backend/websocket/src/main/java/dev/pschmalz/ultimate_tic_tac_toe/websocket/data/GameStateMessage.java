@@ -2,7 +2,7 @@ package dev.pschmalz.ultimate_tic_tac_toe.websocket.data;
 
 import java.util.List;
 
-public class GameStateMessage {
+public class GameStateMessage implements NetworkMessage {
 	private String type = "gameState";
 	private List<String> symbols;
 	
