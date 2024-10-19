@@ -38,6 +38,7 @@ public class PlayerWebSocketHandler extends TextWebSocketHandler {
 		
 		var event = new MatchMakerEvent();
 		event.setPlayer(player);
+		event.setType(MatchMakerEventType.ENTER);
 		
 		matchMaker.addEvent(event);
 	}
