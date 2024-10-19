@@ -19,19 +19,30 @@ public class MetaField {
 		fields = new Field[3][];
 		for(int metaX = 0; metaX < 3; metaX++) {
 			fields[metaX] = new Field[3];
-			for(int metaY = 0; metaX < 3; metaY++)
+			for(int metaY = 0; metaY < 3; metaY++)
 				fields[metaX][metaY] = new Field();
 		}
 	}
 	
-	public RuleViolation putSymbol(Symbol symbol, CellCoordinates coords) {
-		var field = fields[coords.getMetaX()][coords.getMetaY()];
+	public RuleViolation putSymbol(Symbol symbol, CellCoordinates metaCoords, CellCoordinates fieldCoords) {
+		if(!validator.areCoordinatesValid(metaCoords.getX(), metaCoords.getY()))
+			return RuleViolation.INVALID_COORDINATES;
+		
+		var field = fields[metaCoords.getX()][metaCoords.getY()];
 		
 		if(currentField.isPresent() && currentField.get() != field)
 			return RuleViolation.WRONG_FIELD;
 		
-		field.putSymbol(symbol, coords.getX(), coords.getY());
-		return RuleViolation.NONE;
+		var ruleViolation = 
+				field.putSymbol(
+						symbol, 
+						fieldCoords.getX(), 
+						fieldCoords.getY());
+		
+		if(ruleViolation == RuleViolation.NONE)
+			setCurrentField(fieldCoords);
+		
+		return ruleViolation;
 	}
 	
 	public List<String> toListOfStrings() {
@@ -41,5 +52,18 @@ public class MetaField {
 				list.addAll(fields[metaX][metaY].toListOfStrings());
 		
 		return list;
+	}
+	
+	private void setCurrentField(CellCoordinates lastFieldCoords) {
+		var potentialCurrentField = fields[lastFieldCoords.getX()][lastFieldCoords.getY()];
+		
+		if(potentialCurrentField.isVictoryDecided())
+			currentField = Optional.empty();
+		else
+			currentField = Optional.of(potentialCurrentField);
+	}
+	
+	public Optional<Field> getCurrentField() {
+		return currentField;
 	}
 }

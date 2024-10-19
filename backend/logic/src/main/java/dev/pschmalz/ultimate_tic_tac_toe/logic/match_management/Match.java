@@ -34,15 +34,11 @@ public class Match implements Runnable {
 			while(!events.isEmpty()) {
 				var event = events.poll();
 				var coordsData = event.getCoords();
-				var coords = new CellCoordinates(
-						coordsData.metaX(),
-						coordsData.metaY(),
-						coordsData.x(),
-						coordsData.y());
-				
+				var metaCoords = new CellCoordinates(coordsData.metaX(), coordsData.metaY());
+				var fieldCoords = new CellCoordinates(coordsData.x(), coordsData.y());
 				
 				if(players.get(currentTurn) == event.getSource()) {
-					metaGame.putSymbol(currentTurn, coords);
+					metaGame.putSymbol(currentTurn, metaCoords, fieldCoords);
 					
 					var otherPlayer = players.get(Symbol.other(currentTurn));
 					
