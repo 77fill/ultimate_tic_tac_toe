@@ -71,7 +71,7 @@ public class Match implements Runnable {
 			currentTurn = Symbol.other(currentTurn);
 		}
 		else
-			players.get(currentTurn).violation();
+			players.get(currentTurn).violation(metaGame);
 		
 	}
 	

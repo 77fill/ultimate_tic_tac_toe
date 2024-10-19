@@ -30,10 +30,10 @@ public class PlayerImpl implements Player {
 	}
 
 	@Override
-	public void gameState(MetaField metaGame) {
+	public void gameState(MetaField metaField) {
 		var gameStateMessage = new GameStateMessage();
 		
-		gameStateMessage.setSymbols(metaGame.toListOfStrings());
+		gameStateMessage.setSymbols(metaField.toListOfStrings());
 		
 		sendMessage(gameStateMessage);
 	}
@@ -47,8 +47,9 @@ public class PlayerImpl implements Player {
 	}
 
 	@Override
-	public void violation() {
+	public void violation(MetaField metaField) {
 		var msg = new ViolationMessage();
+		msg.setSymbols(metaField.toListOfStrings());
 		
 		sendMessage(msg);
 	}
