@@ -12,7 +12,7 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.match_management.MatchMaker;
 public class GeneralConfig {
 	
 	@Bean
-	public MatchMaker lobby() {
+	public MatchMaker matchMaker() {
 		var lobby = new MatchMaker(executor());
 		
 		executor().execute(lobby);
