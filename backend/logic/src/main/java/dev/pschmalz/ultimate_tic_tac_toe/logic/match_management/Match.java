@@ -94,6 +94,8 @@ public class Match implements Runnable {
 				.getVictoriousSymbol();
 
 		victoriousSymbol.ifPresent(symbol -> {
+			System.out.println("[field victory] symbol:"+symbol);
+			
 			var cellCoords = new CellCoordinates(metaCoords.getX(), metaCoords.getY());
 			player.victory(symbol, cellCoords);
 			otherPlayer.victory(symbol, cellCoords);

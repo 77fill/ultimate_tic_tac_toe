@@ -37,8 +37,7 @@ public class TestField {
 		example_field1.putSymbol(Symbol.X, 0, 2);
 		var victoriousSymbol = example_field1.getVictoriousSymbol();
 		
-		if(victoriousSymbol.isEmpty())
-			fail();
+		assertEquals(true, victoriousSymbol.isPresent());
 		
 		assertEquals(
 				Symbol.X,
