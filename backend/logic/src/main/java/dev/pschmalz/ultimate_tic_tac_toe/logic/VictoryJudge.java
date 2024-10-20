@@ -58,10 +58,10 @@ public class VictoryJudge {
 			return Optional.empty();
 		
 		if(field.cells[0][0].isPresent() && field.cells[2][2].isPresent() 
-				&& field.cells[0][0] == center && field.cells[2][2] == center
+				&& field.cells[0][0].get() == center.get() && field.cells[2][2].get() == center.get()
 				|| 
 				field.cells[2][0].isPresent() && field.cells[0][2].isPresent() 
-				&& field.cells[2][0] == center && field.cells[0][2] == center)
+				&& field.cells[2][0].get() == center.get() && field.cells[0][2].get() == center.get())
 			return center;
 		
 		return Optional.empty();
