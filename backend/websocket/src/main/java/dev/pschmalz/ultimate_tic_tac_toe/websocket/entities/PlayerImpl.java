@@ -9,10 +9,12 @@ import com.google.gson.Gson;
 
 import dev.pschmalz.ultimate_tic_tac_toe.logic.MetaField;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.Player;
+import dev.pschmalz.ultimate_tic_tac_toe.logic.data.CellCoordinates;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.GameStateMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.NetworkMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.SetSymbolMessage;
+import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.VictoryMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.ViolationMessage;
 import dev.pschmalz.ultimate_tic_tac_toe.websocket.data.YourTurnMessage;
 
@@ -71,5 +73,22 @@ public class PlayerImpl implements Player {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void victory(Symbol symbol, CellCoordinates metaCoords) {
+		var msg = new VictoryMessage();
+		msg.setSymbol(symbol.toString());
+		msg.addCoords(metaCoords.getX(), metaCoords.getY());
+		
+		sendMessage(msg);
+	}
+
+	@Override
+	public void victory(Symbol symbol) {
+		var msg = new VictoryMessage();
+		msg.setSymbol(symbol.toString());
+		
+		sendMessage(msg);
 	}
 }

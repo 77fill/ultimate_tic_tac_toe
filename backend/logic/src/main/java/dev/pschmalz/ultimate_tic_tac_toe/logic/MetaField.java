@@ -10,9 +10,10 @@ import dev.pschmalz.ultimate_tic_tac_toe.logic.data.RuleViolation;
 import dev.pschmalz.ultimate_tic_tac_toe.logic.data.Symbol;
 
 public class MetaField {
-	private Field[][] fields;
+	Field[][] fields;
 	private Validator validator = Validator.instance;
 	private Optional<Field> currentField = Optional.empty();
+	private MetaVictoryJudge metaVictoryJudge = new MetaVictoryJudge(this);
 	
 	public MetaField() {
 		
@@ -77,5 +78,13 @@ public class MetaField {
 					return Optional.of(new CellCoordinates(x, y));
 		
 		return Optional.empty();
+	}
+	
+	public Optional<Symbol> getVictoriousSymbol() {
+		return metaVictoryJudge.getVictoriousSymbol();
+	}
+	
+	public Field getField(int metaX, int metaY) {
+		return fields[metaX][metaY];
 	}
 }

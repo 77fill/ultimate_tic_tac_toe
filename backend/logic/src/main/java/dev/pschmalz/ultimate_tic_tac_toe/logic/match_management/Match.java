@@ -2,6 +2,7 @@ package dev.pschmalz.ultimate_tic_tac_toe.logic.match_management;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -18,7 +19,10 @@ public class Match implements Runnable {
 	private Symbol currentTurn = Symbol.X;
 	private Queue<GameEvent> events = new ConcurrentLinkedQueue<>();
 	private boolean running = true;
-	private MetaField metaGame = new MetaField();
+	private MetaField metaField = new MetaField();
+	private boolean theEnd = false;
+	private CellCoordinates metaCoords, fieldCoords;
+	private Optional<CellCoordinates> currentFieldCoords;
 	
 	public Match(Player player1, Player player2) {
 		super();
@@ -53,11 +57,11 @@ public class Match implements Runnable {
 	}
 	
 	private void executeTurn(CellCoordinatesData coordsData) {
-		var metaCoords = new CellCoordinates(coordsData.metaX(), coordsData.metaY());
-		var fieldCoords = new CellCoordinates(coordsData.x(), coordsData.y());
+		metaCoords = new CellCoordinates(coordsData.metaX(), coordsData.metaY());
+		fieldCoords = new CellCoordinates(coordsData.x(), coordsData.y());
 		
 		var ruleViolation = 
-				metaGame.putSymbol(
+				metaField.putSymbol(
 						currentTurn, 
 						metaCoords, 
 						fieldCoords);
@@ -65,21 +69,55 @@ public class Match implements Runnable {
 		if(ruleViolation == RuleViolation.NONE) {
 			var otherPlayer = players.get(Symbol.other(currentTurn));
 			
-			otherPlayer.gameState(metaGame);
-			var currentFieldCoords = metaGame.getCurrentFieldCoords();
+			otherPlayer.gameState(metaField);
+			currentFieldCoords = metaField.getCurrentFieldCoords();
 			
-			if(currentFieldCoords.isEmpty())
-				otherPlayer.itsYourTurnAnyField();
-			else
-				otherPlayer.itsYourTurn(
-						currentFieldCoords.get().getX(), 
-						currentFieldCoords.get().getY());
+			processVictory();
+			if(theEnd)
+				return;
 			
-			currentTurn = Symbol.other(currentTurn);
+			changeTurns();
 		}
 		else
-			players.get(currentTurn).violation(metaGame);
+			players.get(currentTurn).violation(metaField);
 		
+	}
+	
+	private void processVictory() {
+		var player = players.get(currentTurn);
+		var otherPlayer = players.get(Symbol.other(currentTurn));
+		
+		var victoriousSymbol = metaField
+				.getField(
+						metaCoords.getX(), 
+						metaCoords.getY())
+				.getVictoriousSymbol();
+
+		victoriousSymbol.ifPresent(symbol -> {
+			var cellCoords = new CellCoordinates(metaCoords.getX(), metaCoords.getY());
+			player.victory(symbol, cellCoords);
+			otherPlayer.victory(symbol, cellCoords);
+			
+			var victoriousSymbol2 = metaField.getVictoriousSymbol();
+			if(victoriousSymbol2.isPresent()) {
+				player.victory(victoriousSymbol2.get());
+				otherPlayer.victory(victoriousSymbol2.get());
+				theEnd = true;
+			}
+		});		
+	}
+	
+	private void changeTurns() {
+		var otherPlayer = players.get(Symbol.other(currentTurn));
+		
+		if(currentFieldCoords.isEmpty())
+			otherPlayer.itsYourTurnAnyField();
+		else
+			otherPlayer.itsYourTurn(
+					currentFieldCoords.get().getX(), 
+					currentFieldCoords.get().getY());
+		
+		currentTurn = Symbol.other(currentTurn);
 	}
 	
 	private boolean eventComesFromCurrentPlayer(GameEvent event) {
