@@ -10,7 +10,8 @@ export default function useConnection(
     setUltimateFieldData: React.Dispatch<SetStateAction<UltimateTicTacToeData>>,
     setItsYourTurn: React.Dispatch<SetStateAction<boolean>>,
     setSymbol: React.Dispatch<SetStateAction<RegularCellValue>>,
-    setCurrentFieldCoords: React.Dispatch<SetStateAction<[number,number]|[]>>) {
+    setCurrentFieldCoords: React.Dispatch<SetStateAction<[number,number]|[]>>,
+    setVictories: React.Dispatch<SetStateAction<["X"|"O",number,number][]>>) {
 
     const [ws, setWs] = useState(Connector.getWs)
 
@@ -38,6 +39,11 @@ export default function useConnection(
             case "violation":
                 setItsYourTurn(true)
                 setUltimateFieldData(tttAdapt(msg.symbols))
+                break;
+            case "victory":
+                if(msg.metaCoords.length === 2) {
+                    setVictories(old => [...old, [msg.symbol, msg.metaCoords[0], msg.metaCoords[1]]])
+                }
                 break;
         }
     }

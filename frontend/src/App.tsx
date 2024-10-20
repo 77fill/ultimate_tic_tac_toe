@@ -13,15 +13,18 @@ function App() {
 	const [itsYourTurn, setItsYourTurn] = useState(false)
 	const [currentFieldCoords, setCurrentFieldCoords] = useState([] as [number,number]|[])
 	const [symbol, setSymbol] = useState("X" as RegularCellValue)
+	const [victories, setVictories] = useState([] as ["X"|"O",number,number][])
 
 	const send = useConnection(
 		setUltimateFieldData, 
 		setItsYourTurn, 
 		setSymbol,
-		setCurrentFieldCoords)
+		setCurrentFieldCoords,
+		setVictories)
 
 	const get = (metaX:number,metaY:number) => ({
 		focused: currentFieldCoords[0] === metaX && currentFieldCoords[1] === metaY,
+		victory: victories.find(entry => entry[1] === metaX && entry[2] === metaY)?.[0],
 		data: ultimateFieldData.get(metaX,metaY),
 		set: (x:number,y:number) => {
 			if(!itsYourTurn)

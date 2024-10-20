@@ -14,7 +14,8 @@ const StyledTableCell = styled(TableCell)(()=>({
 	height: "30px",
 	textAlign: "center",
 	fontSize: "1.7rem",
-	lineHeight: "1.7rem"
+	lineHeight: "1.7rem",
+	position: "relative"
 }))
 
 export default function TabularField(props: Props) {
